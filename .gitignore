@@ -1,0 +1,30 @@
+# Node modules (if you're using npm/yarn/pnpm)
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories from other package managers
+.pnpm/
+dist/
+build/
+
+# Environment variables
+.env
+.env.*
+
+# IDE/editor files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+# Optional: compiled files
+*.tsbuildinfo
+*.map
+
+
+# Vitest cache
+.vitest/
