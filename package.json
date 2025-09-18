@@ -4,5 +4,8 @@
   },
   "devDependencies": {
     "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "xml-js": "^1.6.11"
   }
 }
