@@ -1,4 +1,6 @@
 {
+  "name": "l2-module",
+  "type": "module",
   "scripts": {
     "test": "vitest"
   },
