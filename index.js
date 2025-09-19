@@ -1,8 +1,6 @@
-// const convert = require('xml-js'); // The XML converter of choice for this module
 import convert from "xml-js";
-import util from "util";
 
-async function fetchRssConvertToJsonString(url) {
+export async function fetchRssConvertToJsonString(url) {
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -15,9 +13,6 @@ async function fetchRssConvertToJsonString(url) {
      * `compact: true` gives a simplified structure, and amount of spaces indicates indenting in the JSON output
      */
     const resJsObject = convert.xml2js(xmlData, { compact: true, spaces: 2 }); // XML string is converted into a compact JSON string for readability
-
-    // debugging purposes only, used to inspect the large JS objects (depth: null to recurse the max amount of times possible, colors for easier reading)
-    console.log(util.inspect(resJsObject, { depth: Infinity, colors: true }));
 
     return resJsObject;
   } catch (error) {
@@ -65,10 +60,22 @@ async function fetchRssConvertToJsonString(url) {
 // ]
 
 /**
- * First draft of a for-loop whose purpose is to grab every title of each entry in that particular feed
+ * Second draft of a for-loop whose purpose is to grab every *keyword* of each entry in that particular feed
+ * TODO: introduce the actual loop
  * */
-async function grabTitle(feed) {
-  for (const [key, value] of Object.entries(convertedXML)) {
-    console.log(`${key}: ${value}`);
-  }
+export async function grabAuthor(feed) {
+  return feed.feed.entry[0].author.name._text;
+}
+
+export async function grabTitle(feed) {
+  return feed.feed.entry[0].title._cdata;
+}
+
+async function grabLink(feed) {
+  return feed.feed.entry[0].link._attributes.href;
+}
+
+async function grabPublished(feed) {
+  const formattedPublished = feed.feed.entry[0].published._text.split("T");
+  return `Date: ${formattedPublished[0]}, time: ${formattedPublished[1]}`;
 }
