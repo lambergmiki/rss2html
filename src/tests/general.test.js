@@ -1,12 +1,14 @@
-import { expect, it, beforeAll } from "vitest";
+import { expect, it, beforeAll, describe } from "vitest";
 import {
   fetchRssConvertToJsonString,
   grabAuthor,
+  grabAllAuthors,
   grabTitle,
   grabPublished,
   grabLink,
   escapeHtmlByReplacingCharacters,
-} from "../../index.js";
+  metadataToHtml,
+} from "../index.js";
 
 let rssData;
 
@@ -17,36 +19,57 @@ beforeAll(async () => {
   );
 });
 
-it("RSS-URL is parsed as a JavaScript object", async () => {
+it("RSS-URL is a JavaScript object", async () => {
   expect(typeof rssData).toBe("object");
 });
 
-it("Should present a String", async () => {
+it("Should present a String (author)", async () => {
   const author = await grabAuthor(rssData);
-  console.log(author);
   expect(typeof author).toBe("string");
 });
 
-it("Should present a String", async () => {
+it("Should present a String (title)", async () => {
   const title = await grabTitle(rssData);
-  console.log(title);
   expect(typeof title).toBe("string");
 });
 
-it("Should present a String", async () => {
+it("Should present a String (link)", async () => {
   const link = await grabLink(rssData);
-  console.log(link);
   expect(typeof link).toBe("string");
 });
 
-it("Should present a String", async () => {
+it("Should present a String (published)", async () => {
   const published = await grabPublished(rssData);
-  console.log(published);
   expect(typeof published).toBe("string");
 });
 
 it("Should present a String with escaped characters if present", () => {
-  const cleanedData = escapeHtmlByReplacingCharacters(">hello");
-  console.log(cleanedData);
-  expect(typeof cleanedData).toBe("string");
+  const escapedCharacters = escapeHtmlByReplacingCharacters(
+    "<testing-escaping-characters>"
+  );
+  console.log(escapedCharacters);
+  expect(escapedCharacters).toMatch("&lt" && "&gt");
+});
+
+it("Should present an array of names that is not empty", async () => {
+  const authorsArray = await grabAllAuthors(rssData);
+  expect(Array.isArray(authorsArray)).toBe(true);
+  expect(authorsArray.length).toBeGreaterThan(0);
+});
+
+it("Should present html template", async () => {
+  const author = await grabAuthor(rssData);
+  const title = await grabTitle(rssData);
+  const link = await grabLink(rssData);
+  const published = await grabPublished(rssData);
+
+  const expectedHtml = `
+  <div>${author}</div>
+  <div>${title}</div>
+  <div>${link}</div>
+  <div>${published}</div>
+  `;
+
+  const result = await metadataToHtml(rssData);
+  expect(result).toBe(expectedHtml);
 });

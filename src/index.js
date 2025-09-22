@@ -60,23 +60,38 @@ export async function fetchRssConvertToJsonString(url) {
 // ]
 
 /**
- * Second draft of a for-loop whose purpose is to grab every *keyword* of each entry in that particular feed
- * TODO: introduce the actual loop
+ * Third and now functional draft of a function that retrieves all values of each key specified (author) in feed provided as argument.
+ * @param {Object} convertedXML - Parsed XML feed converted into a JS object.
+ * @returns {Array<string>} An array of author names.
  * */
-export async function grabAuthor(feed) {
-  return feed.feed.entry[0].author.name._text;
+export async function grabAllAuthors(convertedXML) {
+  // Get all entries
+  const entries = Object.values(convertedXML.feed.entry);
+  const authorsArray = [];
+
+  // Loop over each entry, push the names to an empty array
+  for (const entry of entries) {
+    authorsArray.push(entry?.author?.name?._text);
+  }
+
+  return authorsArray;
 }
 
-export async function grabTitle(feed) {
-  return feed.feed.entry[0].title._cdata;
+export async function grabAuthor(convertedXML) {
+  return convertedXML.feed.entry[0].author.name._text;
 }
 
-export async function grabLink(feed) {
-  return feed.feed.entry[0].link._attributes.href;
+export async function grabTitle(convertedXML) {
+  return convertedXML.feed.entry[0].title._cdata;
 }
 
-export async function grabPublished(feed) {
-  const formattedPublished = feed.feed.entry[0].published._text.split("T");
+export async function grabLink(convertedXML) {
+  return convertedXML.feed.entry[0].link._attributes.href;
+}
+
+export async function grabPublished(convertedXML) {
+  const formattedPublished =
+    convertedXML.feed.entry[0].published._text.split("T");
   return `Date: ${formattedPublished[0]}, time: ${formattedPublished[1]}`;
 }
 
@@ -108,9 +123,16 @@ export function escapeHtmlByReplacingCharacters(str) {
 
 // TODO: Rss-parser, Atom-parser, Html-converter as classes?
 
-// function metadataToHtml(author, title, link, published) {
-//   return `
-//   `;
-// }
+export async function metadataToHtml(convertedXML) {
+  const author = await grabAuthor(convertedXML);
+  const title = await grabTitle(convertedXML);
+  const link = await grabLink(convertedXML);
+  const published = await grabPublished(convertedXML);
 
-// metadataToHTML(grabAuthor("https://www.theverge.com/rss/index.xml"));
+  return `
+  <div>${author}</div>
+  <div>${title}</div>
+  <div>${link}</div>
+  <div>${published}</div>
+  `;
+}
