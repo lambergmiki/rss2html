@@ -20,44 +20,19 @@ export async function fetchRssConvertToJsonString(url) {
   }
 }
 
-/**
- * Preliminary table for Atom terms
- * <feed> <- root element
- * <entry> <- entry/item
- * <author> <- author of entry
- * <title> <- title of entry
- * <link> <- link of entry
- * <published> <- published date of entry
- * <summary> <- summary/description of entry
- * <content> <- actual content of entry
+/** Preliminary table for Atom terms
+ * author: "entry.author.name._text"
+ * title: "entry.title._cdata"
+ * link: "entry.link._attributes.href"
+ * published: "entry.published._text"
  */
-// mappingTableAtom = [
-//     "entry": "",
-//     "author": "resJsObject.entry.author.name._text", // TODO: value to be extracted from _text
-//     "title": "resJsObject.entry.title._cdata", // TODO: value to be extracted from _cdata
-//     "link": "resJsObject.entry.link._attributes.href", // TODO: value to be extracted from href
-//     "published": "resJsObject.entry.published._text", // TODO: value to be extracted from _text
-//     "summary": "resJsObject.entry.summary._cdata", // TODO: value to be extracted from _cdata
-//     "content": "resJsObject.entry.content._cdata" // TODO: value to be extracted from _cdata, however there might be a lot of white space, \n and \t to get rid of here
-// ]
 
 /** Preliminary table for RSS terms
- * <rss><channel> <- root element
- * <item> <- item/entry
- * title <- title of item
- * link <- link of item
- * description <- description/summary of item
- * pubDate <- pubDate/published of item
- * author <- isn't included by default
+ * author: ** not always present **
+ * title: "item.title._cdata",
+ * link: "item.link._text",
+ * pubDate: "item.pubDate._text",
  */
-// mappingTableRss = [
-//     channel: "",
-//     item: "",
-//     title: "",
-//     link: "",
-//     description: "",
-//     pubDate: "",
-// ]
 
 /**
  * Third and now functional draft of a function that retrieves all values of each key specified (author) in feed provided as argument.
@@ -153,7 +128,20 @@ export function escapeHtmlByReplacingCharacters(str) {
   });
 }
 
-// TODO: Rss-parser, Atom-parser, Html-converter as classes?
+export async function getAllEntries(convertedXML) {
+  const entries = Object.values(convertedXML.feed.entry);
+  let allEntries = [];
+
+  for (const entry of entries) {
+    allEntries.push({
+      author: grabAuthor(entry),
+      titles: grabTitle(entry),
+      links: grabLink(entry),
+      published: grabPublished(entry),
+    });
+    return allEntries;
+  }
+}
 
 export async function metadataToHtml(convertedXML) {
   const author = await grabAuthor(convertedXML);

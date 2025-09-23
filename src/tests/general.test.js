@@ -11,18 +11,22 @@ import {
   grabAllLinks,
   escapeHtmlByReplacingCharacters,
   metadataToHtml,
+  getAllEntries,
 } from "../index.js";
 
 let rssData;
 
 // Run initial fetch once before all tests to provide test data
 beforeAll(async () => {
+  // rss-url: https://rss.aftonbladet.se/rss2/small/pages/sections/senastenytt/
+  // atom-url: https://www.theverge.com/rss/tech/index.xml
   rssData = await fetchRssConvertToJsonString(
-    "https://www.theverge.com/rss/index.xml"
+    "https://www.theverge.com/rss/tech/index.xml"
   );
 });
 
 it("RSS-URL is a JavaScript object", async () => {
+  console.log(rssData.feed.entry[0]);
   expect(typeof rssData).toBe("object");
 });
 
@@ -50,7 +54,6 @@ it("Should present a String with escaped characters if present", () => {
   const escapedCharacters = escapeHtmlByReplacingCharacters(
     "<testing-escaping-characters>"
   );
-  console.log(escapedCharacters);
   expect(escapedCharacters).toMatch("&lt" && "&gt");
 });
 
@@ -80,6 +83,12 @@ it("Should present an array of 'published dates' that is not empty", async () =>
   expect(Array.isArray(publishedArray)).toBe(true);
   expect(publishedArray.length).toBeGreaterThan(0);
 });
+
+// it("Should present an array with correctly built entries", async () => {
+//   const allEntriesFormattedInTest = await getAllEntries(rssData);
+//   expect(Array.isArray(allEntriesFormattedInTest)).toBe(true);
+//   expect(allEntriesFormattedInTest.length).toBeGreaterThan(0);
+// });
 
 it("Should present html template", async () => {
   const author = await grabAuthor(rssData);
