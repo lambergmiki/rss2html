@@ -45,7 +45,7 @@ export async function grabLink(entry) {
 
 export async function grabPublished(entry) {
   const formattedPublished = entry?.published?._text.split("T");
-  return `Date: ${formattedPublished[entry]}, time: ${formattedPublished[entry]}`;
+  return `Date: ${formattedPublished[0]}, time: ${formattedPublished[1]}`;
 }
 
 export async function grabAllTitles(convertedXML) {
