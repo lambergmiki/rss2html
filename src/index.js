@@ -1,50 +1,29 @@
 import convert from "xml-js";
 
-export async function fetchRssConvertToJsonString(url) {
+export async function fetchXmlConvertToJsObject(url) {
   try {
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
 
-    const xmlData = await response.text(); // text() is called to read the body stream as text, returns a promise that resolves with a String representation of the XML
+    // Reads the body stream as text, returns a promise that resolves with a String representation of the XML
+    const xmlData = await response.text();
 
-    /** XML string is converted into a compact JSON string for readability
-     * `compact: true` gives a simplified structure, and amount of spaces indicates indenting in the JSON output
-     */
-    const resJsObject = convert.xml2js(xmlData, { compact: true, spaces: 2 }); // XML string is converted into a compact JSON string for readability
+    // XML string is converted (with options for better readability) to a JavaScript object for easier manipulation.
+    const jsObject = convert.xml2js(xmlData, { compact: true, spaces: 2 });
 
-    return resJsObject;
+    return jsObject;
   } catch (error) {
     console.error(error.message);
   }
 }
 
-/** Preliminary table for Atom terms
- * author: "entry.author.name._text"
- * title: "entry.title._cdata"
- * link: "entry.link._attributes.href"
- * published: "entry.published._text"
- */
-
-/** Preliminary table for RSS terms
- * author: ** not always present **
- * title: "item.title._cdata",
- * link: "item.link._text",
- * pubDate: "item.pubDate._text",
- */
-
-/**
- * Third and now functional draft of a function that retrieves all values of each key specified (author) in feed provided as argument.
- * @param {Object} convertedXML - Parsed XML feed converted into a JS object.
- * @returns {Array<string>} An array of author names.
- * */
 export async function grabAllAuthors(convertedXML) {
-  // Get all entries
   const entries = Object.values(convertedXML.feed.entry);
   const authorsArray = [];
 
-  // Loop over each entry, push the names to an empty array
+  // TODO: If there is more than one author, it currently returns undefined for that entry.
   for (const entry of entries) {
     authorsArray.push(entry?.author?.name?._text);
   }
@@ -52,12 +31,21 @@ export async function grabAllAuthors(convertedXML) {
   return authorsArray;
 }
 
-export async function grabAuthor(convertedXML) {
-  return convertedXML.feed.entry[0].author.name._text;
+export async function grabAuthor(entry) {
+  return entry?.author?.name?._text;
 }
 
-export async function grabTitle(convertedXML) {
-  return convertedXML.feed.entry[0].title._cdata;
+export async function grabTitle(entry) {
+  return entry?.title?._cdata;
+}
+
+export async function grabLink(entry) {
+  return entry?.link?._attributes?.href;
+}
+
+export async function grabPublished(entry) {
+  const formattedPublished = entry?.published?._text.split("T");
+  return `Date: ${formattedPublished[entry]}, time: ${formattedPublished[entry]}`;
 }
 
 export async function grabAllTitles(convertedXML) {
@@ -70,10 +58,6 @@ export async function grabAllTitles(convertedXML) {
   return titlesArray;
 }
 
-export async function grabLink(convertedXML) {
-  return convertedXML.feed.entry[0].link._attributes.href;
-}
-
 export async function grabAllLinks(convertedXML) {
   const entries = Object.values(convertedXML.feed.entry);
   const linksArray = [];
@@ -81,15 +65,8 @@ export async function grabAllLinks(convertedXML) {
   for (const entry of entries) {
     linksArray.push(entry?.link?._attributes?.href);
   }
-  return linksArray;
-}
 
-/** Format: [ '2025-09-23', '01:52:08-04:00' ], 01:52:08 local time, -04:00 is offset from UTC, so
- * 05:52:08 UTC */
-export async function grabPublished(convertedXML) {
-  const formattedPublished =
-    convertedXML.feed.entry[0].published._text.split("T");
-  return `Date: ${formattedPublished[0]}, time: ${formattedPublished[1]}`;
+  return linksArray;
 }
 
 export async function grabAllPublished(convertedXML) {
@@ -129,25 +106,25 @@ export function escapeHtmlByReplacingCharacters(str) {
 }
 
 export async function getAllEntries(convertedXML) {
-  const entries = Object.values(convertedXML.feed.entry);
+  const entries = convertedXML.feed.entry;
   let allEntries = [];
 
   for (const entry of entries) {
     allEntries.push({
-      author: grabAuthor(entry),
-      titles: grabTitle(entry),
-      links: grabLink(entry),
-      published: grabPublished(entry),
+      author: await grabAuthor(entry),
+      titles: await grabTitle(entry),
+      links: await grabLink(entry),
+      published: await grabPublished(entry),
     });
-    return allEntries;
   }
+  return allEntries;
 }
 
 export async function metadataToHtml(convertedXML) {
-  const author = await grabAuthor(convertedXML);
-  const title = await grabTitle(convertedXML);
-  const link = await grabLink(convertedXML);
-  const published = await grabPublished(convertedXML);
+  const author = await grabAuthor(convertedXML.feed.entry[0]);
+  const title = await grabTitle(convertedXML.feed.entry[0]);
+  const link = await grabLink(convertedXML.feed.entry[0]);
+  const published = await grabPublished(convertedXML.feed.entry[0]);
 
   return `
   <div>${author}</div>

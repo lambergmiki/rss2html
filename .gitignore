@@ -28,3 +28,5 @@ build/
 
 # Vitest cache
 .vitest/
+
+datastructures.txt
