@@ -112,8 +112,8 @@ export async function getAllEntries(convertedXML) {
   for (const entry of entries) {
     allEntries.push({
       author: await grabAuthor(entry),
-      titles: await grabTitle(entry),
-      links: await grabLink(entry),
+      title: await grabTitle(entry),
+      link: await grabLink(entry),
       published: await grabPublished(entry),
     });
   }
@@ -121,15 +121,15 @@ export async function getAllEntries(convertedXML) {
 }
 
 export async function metadataToHtml(convertedXML) {
-  const author = await grabAuthor(convertedXML.feed.entry[0]);
-  const title = await grabTitle(convertedXML.feed.entry[0]);
-  const link = await grabLink(convertedXML.feed.entry[0]);
-  const published = await grabPublished(convertedXML.feed.entry[0]);
+  const allEntries = await getAllEntries(convertedXML);
+  let htmlTemplate = "";
+  for (const entry of allEntries) {
+    htmlTemplate += `<div>${entry.author}</div>`;
+    htmlTemplate += `<div>${entry.title}</div>`;
+    htmlTemplate += `<div>${entry.link}</div>`;
+    htmlTemplate += `<div>${entry.published}</div>`;
+    htmlTemplate += `<br>`;
+  }
 
-  return `
-  <div>${author}</div>
-  <div>${title}</div>
-  <div>${link}</div>
-  <div>${published}</div>
-  `;
+  return htmlTemplate;
 }

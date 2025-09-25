@@ -99,19 +99,8 @@ describe("Escaping characters (XSS-protection)", () => {
 
 describe("Test if HTML output is correct based on data fed", () => {
   it("Should present a HTML template", async () => {
-    const author = await grabAuthor(rssData.feed.entry[0]);
-    const title = await grabTitle(rssData.feed.entry[0]);
-    const link = await grabLink(rssData.feed.entry[0]);
-    const published = await grabPublished(rssData.feed.entry[0]);
-
-    const expectedHtml = `
-  <div>${author}</div>
-  <div>${title}</div>
-  <div>${link}</div>
-  <div>${published}</div>
-  `;
-
     const result = await metadataToHtml(rssData);
-    expect(result).toBe(expectedHtml);
+    console.log(result);
+    expect(result).toBe(TODO); // TODO: Apply validation to confirm valid HTML output
   });
 });
