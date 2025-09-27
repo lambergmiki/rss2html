@@ -1,24 +1,28 @@
-import convert from "xml-js";
+import { XmlConverter } from "./XmlConverter.js";
+import { AtomExtractor } from "./AtomExtractor.js";
+import { HtmlConverter } from "./HtmlConverter.js";
 
-export async function fetchXmlConvertToJsObject(url) {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
+// node index.js outputs an entire urls worth of entries in divs. Woohoo.
+/** I am aware I need to boil this down to a simple convertUrlToFeed()-kind-of-method via one
+ * instance of a final class for a 'clean code' approach, so called "high abstraction-level code".
+ * I'll get there!
+ */
+(async () => {
+  const url = "https://www.theverge.com/rss/index.xml";
 
-    // Reads the body stream as text, returns a promise that resolves with a String representation of the XML
-    const xmlData = await response.text();
+  const xmlConverter = new XmlConverter();
+  const atomExtractor = new AtomExtractor();
+  const htmlConverter = new HtmlConverter();
 
-    // XML string is converted (with options for better readability) to a JavaScript object for easier manipulation.
-    const jsObject = convert.xml2js(xmlData, { compact: true, spaces: 2 });
+  const xmlData = await xmlConverter.fetchRss(url);
+  const jsObj = xmlConverter.convertXmlToJsObject(xmlData);
+  const allEntries = atomExtractor.getAllEntries(jsObj);
+  const html = htmlConverter.metadataToHtml(allEntries);
 
-    return jsObject;
-  } catch (error) {
-    console.error(error.message);
-  }
-}
+  console.log(html);
+})();
 
+// TODO: Scrap these as they serve no purpose?
 export async function grabAllAuthors(convertedXML) {
   const entries = Object.values(convertedXML.feed.entry);
   const authorsArray = [];
@@ -29,23 +33,6 @@ export async function grabAllAuthors(convertedXML) {
   }
 
   return authorsArray;
-}
-
-export async function grabAuthor(entry) {
-  return entry?.author?.name?._text;
-}
-
-export async function grabTitle(entry) {
-  return entry?.title?._cdata;
-}
-
-export async function grabLink(entry) {
-  return entry?.link?._attributes?.href;
-}
-
-export async function grabPublished(entry) {
-  const formattedPublished = entry?.published?._text.split("T");
-  return `Date: ${formattedPublished[0]}, time: ${formattedPublished[1]}`;
 }
 
 export async function grabAllTitles(convertedXML) {
@@ -77,59 +64,4 @@ export async function grabAllPublished(convertedXML) {
     publishedArray.push(entry?.published._text.split("T"));
   }
   return publishedArray;
-}
-
-export function escapeHtmlByReplacingCharacters(str) {
-  // Force to string to avoid errors
-  str = String(str);
-
-  const escapedCharactersTable = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
-  };
-
-  /** Return result based on regex literal...
-   * /.../ -> regex literal
-   * [...] -> a character class (match any of these chars)
-   * Character "g" stands for global, so it finds all matches, not just the first one
-   *
-   * When replace() is called with a function, the function is invoked once for each match.
-   * The first (and only in this case) arg, 'match' is the actual matched substring from the regex literal.
-   * The 'match' is used as a key to get the replacement value from the object escapedCharactersTable.
-   */
-  return str.replace(/[&<>"']/g, function (match) {
-    return escapedCharactersTable[match];
-  });
-}
-
-export async function getAllEntries(convertedXML) {
-  const entries = convertedXML.feed.entry;
-  let allEntries = [];
-
-  for (const entry of entries) {
-    allEntries.push({
-      author: await grabAuthor(entry),
-      title: await grabTitle(entry),
-      link: await grabLink(entry),
-      published: await grabPublished(entry),
-    });
-  }
-  return allEntries;
-}
-
-export async function metadataToHtml(convertedXML) {
-  const allEntries = await getAllEntries(convertedXML);
-  let htmlTemplate = "";
-  for (const entry of allEntries) {
-    htmlTemplate += `<div>${entry.author}</div>`;
-    htmlTemplate += `<div>${entry.title}</div>`;
-    htmlTemplate += `<div>${entry.link}</div>`;
-    htmlTemplate += `<div>${entry.published}</div>`;
-    htmlTemplate += `<br>`;
-  }
-
-  return htmlTemplate;
 }
