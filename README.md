@@ -6,11 +6,9 @@
 
 ## Generate HTML templates from RSS feeds
 
-With the help of <a href="https://www.npmjs.com/package/xml-js">xml-js</a>, RSS-URLs (which carry XML data) are converted into JavaScript objects. These are then processed and transformed into a RSS feed, packaged as simple HTML, ready to be embedded on your website.
+With the help of <a href="https://www.npmjs.com/package/xml-js">xml-js</a>, RSS-URLs are processed and transformed into RSS feeds, packaged as simple HTML, ready to be embedded on your website.
 
-The idea is to learn more about XML, RSS/Atom and create something useful for myself, while creating an (almost) independent module.
-
-<em>Note: This project is primarily created as part of a university course assignment, rather than being intended for public use. The 'Reflection' section below is therefore written in Swedish. With that said, feel free to use it as you wish.<em>
+<em>Note: This project was primarily created as part of a university course assignment and is therefore a learning exercise, rather than an actual module for public use. The mandatory 'Reflection' section below is therefore written in Swedish as per the assignment. With that said, feel free to use the module as you wish.<em>
 
 ## How does it work?
 
@@ -71,11 +69,12 @@ Did you find bugs that are not yet listed as issues, or do you simply want a cha
 
 #### Tabellreflektion för namnginving
 
-| Namn        | Förklaring  | Reflektion och regler från Clean Code |
-| ----------- | ----------- | ------------------------------------- |
-| placeholder | placeholder | placeholder                           |
-| placeholder | placeholder | placeholder                           |
-| placeholder | placeholder | placeholder                           |
+| Namn                                               | Förklaring                                                                     | Reflektion och regler från Clean Code                                                                                                                                                                                                                                                       |
+| -------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| grabPublished()                                    | Metodnamn i klassen AtomExtractor                                              | Har klart och tydligt en **side effect** genom att inte bara hämta published date/time, utan även formatera det. I RssExtractor hämtar den utan att formatera (ej nödvändigt) och är därför lämplig där. Samtidigt så förstör jag polymorfismen om jag skulle döpa om AtomExtractors metod. |
+| grabX(), grabY(), grabZ()...                       | Metodnamn i superklassen Extractor och dess barnklasser Atom- och RssExtractor | I efterhand vet jag inte varför jag döpte metoden till "grab". Mest lämpligt är såklart "get" som är allmänt vedertaget som just en sådan här "getter". Att jag valt "grab" istället kan hinta om att datan extraheras på något annat sätt. Jag låter det stå, i alla fall.                 |
+| XmlConverter, Extractor, xExtractor, HtmlConverter | Klassnamn                                                                      | placeholder                                                                                                                                                                                                                                                                                 |
+| getEntries()                                       | placeholder                                                                    | **Pick one word per concept**, which I clearly didn't. When I started off, I chose "grab" for some methods, as mentioned above. Later on, you can clearly see I chose the much more reliable get. Which I obviously should have done for the others, as well.                               |
 
 #### Kapitelreflektion kap 2
 
@@ -83,11 +82,11 @@ placeholder
 
 #### Tabellreflektion för funktioner/metoder
 
-| Metodnamn   | Kod         | Reflektion  |
-| ----------- | ----------- | ----------- |
-| placeholder | placeholder | placeholder |
-| placeholder | placeholder | placeholder |
-| placeholder | placeholder | placeholder |
+| Metodnamn   | Kod         | Reflektion       |
+| ----------- | ----------- | ---------------- |
+| placeholder | placeholder | **Do One Thing** |
+| placeholder | placeholder | placeholder      |
+| placeholder | placeholder | placeholder      |
 
 #### Kapitelreflektion kap 3
 
@@ -95,7 +94,7 @@ placeholder
 
 #### Reflektion över egen kodkvalitet
 
-Även om jag gick in i kurs (rättare sagt _bok, Clean Code_) med viss skepsis, tycker jag att jag hittat:<br>
+Även om jag gick in i kursen (rättare sagt, boken, Clean Code) med viss skepsis, tycker jag att jag hittat:<br>
 
 - vanor i mitt sätt att skriva som verkligen fått mig att ifrågasätta nämnda vanor (se reflektion rörande kapitel 2 & 3)
 - nya sätt att se på kod, inte ny kod per defintion, utan nya sätt att se på problemlösning och kommunikation via kod på
