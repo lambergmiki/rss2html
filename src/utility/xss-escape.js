@@ -1,3 +1,4 @@
+/** Disclaimer: This method prevents common XSS-attacks, but NOT all of them. */
 export function xssEscape(str) {
   // Force to string to avoid errors
   str = String(str);

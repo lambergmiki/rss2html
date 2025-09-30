@@ -25,7 +25,7 @@ export class XmlConverter {
     /** XML string is converted into a compact JavaScript object for easier manipulation.
      * `compact: true` gives a simplified structure, and amount of spaces indicate indenting for readability.
      */
-    const resJsObject = convert.xml2js(xmlData, { compact: true, spaces: 2 }); // XML string is converted into a compact JS Object for
+    const resJsObject = convert.xml2js(xmlData, { compact: true, spaces: 2 });
     return resJsObject;
   }
 }
