@@ -1,6 +1,6 @@
 import { Extractor } from "./Extractor.js";
 
-export class RssConverter extends Extractor {
+export class RssExtractor extends Extractor {
   getEntries(convertedXML) {
     return convertedXML.rss.channel.item;
   }
