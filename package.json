@@ -1,13 +1,34 @@
 {
   "name": "rss2html",
+  "description": "Convert RSS/Atom to an HTML-ready-feed",
+  "version": "1.0",
   "type": "module",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "test": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lambergmiki/rss2html"
+  },
+  "exports": {
+    ".": "./index.js"
   },
   "devDependencies": {
     "vitest": "^3.2.4"
   },
   "dependencies": {
     "xml-js": "^1.6.11"
-  }
+  },
+  "keywords": [
+    "rss",
+    "html",
+    "converter",
+    "parser"
+  ],
+  "author": "Miki Lamberg",
+  "license": "MIT"
 }
