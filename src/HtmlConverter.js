@@ -13,9 +13,10 @@ export class HtmlConverter {
       for (const item of allEntries) {
         htmlTemplate += `<div>${xssEscape(item?.author)}</div>`;
         htmlTemplate += `<div>${xssEscape(item?.title)}</div>`;
-        htmlTemplate += `<div>${xssEscape(item?.link)}</div>`;
-        htmlTemplate += `<div>${xssEscape(item?.pubDate)}</div>`;
-        htmlTemplate += `<br>`;
+        htmlTemplate += `<div><a href="${xssEscape(
+          item?.link
+        )}">Link</a></div>`;
+        htmlTemplate += `<div>${xssEscape(item?.published)}</div><br>`;
       }
     } else if (convertedXML?.feed) {
       const extractor = new AtomExtractor();
@@ -24,9 +25,10 @@ export class HtmlConverter {
       for (const entry of allEntries) {
         htmlTemplate += `<div>${xssEscape(entry?.author)}</div>`;
         htmlTemplate += `<div>${xssEscape(entry?.title)}</div>`;
-        htmlTemplate += `<div>${xssEscape(entry?.link)}</div>`;
-        htmlTemplate += `<div>${xssEscape(entry?.published)}</div>`;
-        htmlTemplate += `<br>`;
+        htmlTemplate += `<div><a href="${xssEscape(
+          entry?.link
+        )}">Link</a></div>`;
+        htmlTemplate += `<div>${xssEscape(entry?.published)}</div><br>`;
       }
     }
     return htmlTemplate;
