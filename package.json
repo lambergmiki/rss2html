@@ -1,11 +1,11 @@
 {
   "name": "rss2html",
-  "description": "Convert RSS/Atom to an HTML-ready-feed",
-  "version": "1.0.1",
+  "description": "Convert RSS/Atom to a HTML-ready-feed",
+  "version": "1.0.3",
   "type": "module",
-  "main": "src/index.js",
+  "main": "index.js",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "scripts": {
     "test": "vitest"
@@ -25,6 +25,8 @@
   },
   "keywords": [
     "rss",
+    "atom",
+    "feed",
     "html",
     "converter",
     "parser"
