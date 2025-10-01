@@ -3,9 +3,7 @@ import { AtomExtractor } from "./src/AtomExtractor.js";
 import { HtmlConverter } from "./src/HtmlConverter.js";
 import { RssExtractor } from "./src/RssExtractor.js";
 
-
 export async function convertRssToHtml(url) {
-
   const xmlConverter = new XmlConverter();
   const rssExtractor = new RssExtractor();
   const htmlConverter = new HtmlConverter();
@@ -17,8 +15,7 @@ export async function convertRssToHtml(url) {
   return htmlConverter.metadataToHtml(allEntries);
 }
 
-export async function convertAtomToHtml {
-
+export async function convertAtomToHtml(url) {
   const xmlConverter = new XmlConverter();
   const atomExtractor = new AtomExtractor();
   const htmlConverter = new HtmlConverter();
