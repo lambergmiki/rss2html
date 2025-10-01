@@ -17,19 +17,6 @@ Modulen har genomgått omfattande tester med olika _typer_ av data (Atom/RSS) oc
 - OS: Linux x64 6.8.0-79-generic
 - Distribution: Linux Mint, Cinnamon 22.1
 
-| Subjekt                | Hur det testats  | Testresultat |
-| ---------------------- | :--------------: | :----------: |
-| idk                    |       wut        |     wut      |
-| hallo                  |       wut        |     wut      |
-| **COVERAGE & SUCCESS** | 2 tests (2 FAIL) |   0 tests    |
-
-### Detaljerade tester (stickprov)
-
-| Vad som testats                                     | Förväntat resultat                   | Utfall  |
-| --------------------------------------------------- | ------------------------------------ | ------- |
-| Should present a String (title)                     | String med förväntat värde           | Success |
-| Should present an array of titles that is not empty | Array med samtliga förväntade värden | Success |
-
 ##### Extraction of a single value within a feed
 
 ```javascript
@@ -39,7 +26,7 @@ it("Should present a String (title)", async () => {
 });
 ```
 
-##### Extraction of multiple values within a feed
+##### Extraction of multiple values within a feed (legacy, no longer part of source code)
 
 ```javascript
 it("Should present an array of titles that is not empty", async () => {
@@ -51,7 +38,7 @@ it("Should present an array of titles that is not empty", async () => {
 
 ---
 
-## ![testrapport 1](./images/testrapport-1.png)
+## ![testrapport-1](./images/testrapport-1.png)
 
 ### Kommentarer
 
@@ -88,7 +75,7 @@ Nästa steg i testväg är att skapa en testsvit som kontrollerar datahantering 
 
 ---
 
-## ![testrapport 2](./images/testrapport-2.png)
+## ![testrapport-2](./images/testrapport-2.png)
 
 ### Kommentarer
 
@@ -96,6 +83,40 @@ Testsviten är nu strukturerad och mer överskådlig. Samtliga tester kan hanter
 
 ---
 
-## Övrigt
+## Testresultat #2
 
-Placeholder...
+**Datum:** 2025-10-01
+
+**Modulversion:** 1.0
+
+**Testmiljö:**
+
+- Visual Studio Code: 1.104.1
+- Node.js: 22.18.0
+- OS: Linux x64 6.8.0-84-generic
+- Distribution: Linux Mint, Cinnamon 22.1
+
+---
+
+## ![testrapport-3](./images/testrapport-3.png)
+
+### Kommentarer
+
+Efter en större och troligtvis sista refaktorering igårkväll så är testsviten komplett.
+Förändringar:
+
+- ett test som kontrollerar datatyp på Atom-data också, inte bara RSS
+- ett test som kontrollerar output i HTML även när datakällan är Atom
+- testerna som testat för extrahering av flera värden är borttagna då ingen av dem nyttjas i modulen
+
+---
+
+## Sammanfattning
+
+##### Totalt antal tester: 15
+
+##### Framgångsrika tester: 100%
+
+##### Test coverage: alla funktioner och metoder nödvändiga för att genomföra en konvertering av XML till färdig HTML.
+
+##### Teststrategi: Automatiska enhetstester och integrationstester i testramverket Vitest.

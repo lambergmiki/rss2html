@@ -1,7 +1,7 @@
-import { XmlConverter } from "./XmlConverter.js";
-import { AtomExtractor } from "./AtomExtractor.js";
-import { HtmlConverter } from "./HtmlConverter.js";
-import { RssExtractor } from "./RssExtractor.js";
+import { XmlConverter } from "./src/XmlConverter.js";
+import { AtomExtractor } from "./src/AtomExtractor.js";
+import { HtmlConverter } from "./src/HtmlConverter.js";
+import { RssExtractor } from "./src/RssExtractor.js";
 
 
 export async function convertRssToHtml(url) {
