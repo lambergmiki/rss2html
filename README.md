@@ -12,21 +12,20 @@ _Note: This project was primarily created as part of a university course assignm
 
 ## How does it work?
 
-Set the following code up in a file and execute it in node, then console.log() the result.
-_Disclaimer: placeholder code, the package only works within the test framework currently._
+rss2html takes a raw RSS-feed URL and processes it in multiple steps to finally deliver HTML-ready code you can copy and paste to your website and style as you wish.
+
+Import the function `convertRssToHtml` from the package as shown below, paste your RSS-feed URL as an argument and run it in Node with the command `node <your-filename>.js`. `Console.log()` the result and paste the output into your .html-file.
+
+#### Example in Node.js
 
 ```javascript
-import { FinalClass } from "NameOfFinalClass";
+import { convertRssToHtml } from "rss2html";
 
-const instanceOfFinalClass = new FinalClass();
-const feedInHtml = instanceOfNameOfFinalClass.generateFeed(
-  "<your-rss/atom-url-here>"
-);
-
-console.log(feedInHtml);
+const result = await convertRssToHtml(atomUrl);
+console.log(result);
 ```
 
-Example output
+#### Example output
 
 ```html
 <div>John Smith</div>
@@ -42,14 +41,8 @@ Example output
 
 ## Installation
 
-https://www.npmjs.com/package/rss2html
-
-Example:
-
-```bash
+```
 npm install rss2html
-node index.js
-...
 ```
 
 ## How to contribute
