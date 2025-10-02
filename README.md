@@ -12,7 +12,8 @@ _Note: This project was primarily created as part of a university course assignm
 
 ## How does it work?
 
-TODO: Complete use case example for Atom and RSS feeds
+Set the following code up in a file and execute it in node, then console.log() the result.
+_Disclaimer: placeholder code, the package only works within the test framework currently._
 
 ```javascript
 import { FinalClass } from "NameOfFinalClass";
@@ -21,6 +22,8 @@ const instanceOfFinalClass = new FinalClass();
 const feedInHtml = instanceOfNameOfFinalClass.generateFeed(
   "<your-rss/atom-url-here>"
 );
+
+console.log(feedInHtml);
 ```
 
 Example output
@@ -39,7 +42,7 @@ Example output
 
 ## Installation
 
-TODO: Complete installation instructions
+https://www.npmjs.com/package/rss2html
 
 Example:
 
