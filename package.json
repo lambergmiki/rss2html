@@ -1,7 +1,7 @@
 {
   "name": "rss2html",
   "description": "Convert RSS/Atom to a HTML-ready-feed",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "type": "module",
   "main": "index.js",
   "engines": {
@@ -17,6 +17,11 @@
   "exports": {
     ".": "./index.js"
   },
+  "files": [
+    "/src",
+    "index.js",
+    "readme.md"
+  ],
   "devDependencies": {
     "vitest": "^3.2.4"
   },

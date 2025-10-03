@@ -21,7 +21,7 @@ Import the function `convertRssToHtml` from the package as shown below, paste yo
 ```javascript
 import { convertRssToHtml } from "rss2html";
 
-const result = await convertRssToHtml(atomUrl);
+const result = await convertRssToHtml(url);
 console.log(result);
 ```
 
