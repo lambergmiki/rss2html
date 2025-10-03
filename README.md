@@ -27,11 +27,20 @@ console.log(result);
 
 #### Example output
 
+Output in terminal:
+
+```
+<div>John Smith</div><div>'rss2html is the coolest module on the street - here's why</div><div>www.github.com/coolestnews/available/here</div><div>Date: 2025-09-24, time: 15:35:00</div><br>
+```
+
+Output once pasted into an HTML-file:
+
 ```html
 <div>John Smith</div>
 <div>'rss2html is the coolest module on the street - here's why</div>
 <div>www.github.com/coolestnews/available/here</div>
 <div>Date: 2025-09-24, time: 15:35:00</div>
+<br />
 
 <div>Dave Peterson</div>
 <div>...</div>
