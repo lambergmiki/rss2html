@@ -1,11 +1,11 @@
 import { XmlConverter } from "./src/XmlConverter.js";
-import { HtmlConverter } from "./src/HtmlConverter.js";
+import { FeedTransformer } from "./src/FeedTransformer.js";
 
 export async function convertRssToHtml(url) {
-  const xmlConverter = new XmlConverter();
-  const htmlConverter = new HtmlConverter();
+	const xmlConverter = new XmlConverter();
+	const feedTransformer = new FeedTransformer();
 
-  const xmlData = await xmlConverter.fetchRss(url);
-  const jsObj = xmlConverter.convertXmlToJsObject(xmlData);
-  return await htmlConverter.metadataToHtml(jsObj);
+	const xmlData = await xmlConverter.fetchRss(url);
+	const jsObj = xmlConverter.convertXmlToJsObject(xmlData);
+	return await feedTransformer.convertToFeedOutput(jsObj);
 }

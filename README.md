@@ -8,6 +8,8 @@
 
 With the help of <a href="https://www.npmjs.com/package/xml-js">xml-js</a>, RSS-URLs are processed and transformed into RSS feeds, packaged as simple HTML, ready to be embedded on your website.
 
+News! As of 17/10-2025 the output includes the feed as a structured array, allowing for easier manipulation, e.g. sorting and filtering items.
+
 _Note: This project was primarily created as part of a university course assignment and is therefore a learning exercise, rather than an actual module for public use. With that said, feel free to use the module as you wish._
 
 ## How does it work?
@@ -26,6 +28,29 @@ console.log(result);
 ```
 
 #### Example output
+
+## Updated as of 17/10-2025
+
+Output in terminal:
+
+```
+{
+    htmlOutput: '<div>John Smith</div><div>'rss2html is the coolest module on the street - here's why</div>...,
+    arrayOutput: [
+        {
+            author: 'John Smith',
+            title: 'rss2html rocks',
+            link: 'www.github.com/lambergmiki',
+            published: 'Date: 2025-10-17, time: 13:52:11'
+        },
+        {
+            author: '...',
+        }
+    ]
+}
+```
+
+---
 
 Output in terminal:
 

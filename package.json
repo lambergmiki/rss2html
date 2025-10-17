@@ -1,41 +1,41 @@
 {
-  "name": "rss2html",
-  "description": "Convert RSS/Atom to a HTML-ready-feed",
-  "version": "1.0.7",
-  "type": "module",
-  "main": "index.js",
-  "engines": {
-    "node": ">=20.0.0"
-  },
-  "scripts": {
-    "test": "vitest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lambergmiki/rss2html"
-  },
-  "exports": {
-    ".": "./index.js"
-  },
-  "files": [
-    "/src",
-    "index.js",
-    "readme.md"
-  ],
-  "devDependencies": {
-    "vitest": "^3.2.4"
-  },
-  "dependencies": {
-    "xml-js": "^1.6.11"
-  },
-  "keywords": [
-    "rss",
-    "atom",
-    "feed",
-    "html",
-    "converter",
-    "parser"
-  ],
-  "author": "Miki Lamberg",
-  "license": "MIT"
+	"name": "rss2html",
+	"description": "Convert RSS/Atom to a HTML-ready-feed",
+	"version": "1.0.8",
+	"type": "module",
+	"main": "index.js",
+	"engines": {
+		"node": ">=20.0.0"
+	},
+	"scripts": {
+		"test": "vitest"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/lambergmiki/rss2html"
+	},
+	"exports": {
+		".": "./index.js"
+	},
+	"files": [
+		"/src",
+		"index.js",
+		"readme.md"
+	],
+	"devDependencies": {
+		"vitest": "^3.2.4"
+	},
+	"dependencies": {
+		"xml-js": "^1.6.11"
+	},
+	"keywords": [
+		"rss",
+		"atom",
+		"feed",
+		"html",
+		"converter",
+		"parser"
+	],
+	"author": "Miki Lamberg",
+	"license": "MIT"
 }

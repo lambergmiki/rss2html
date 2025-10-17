@@ -21,8 +21,8 @@ Modulen har genomgått omfattande tester med olika _typer_ av data (Atom/RSS) oc
 
 ```javascript
 it("Should present a String (title)", async () => {
-  const title = await grabTitle(rssData.feed.entry[0]);
-  expect(typeof title).toBe("string");
+	const title = await grabTitle(rssData.feed.entry[0]);
+	expect(typeof title).toBe("string");
 });
 ```
 
@@ -30,9 +30,9 @@ it("Should present a String (title)", async () => {
 
 ```javascript
 it("Should present an array of titles that is not empty", async () => {
-  const titlesArray = await grabAllTitles(rssData);
-  expect(Array.isArray(titlesArray)).toBe(true);
-  expect(titlesArray.length).toBeGreaterThan(0);
+	const titlesArray = await grabAllTitles(rssData);
+	expect(Array.isArray(titlesArray)).toBe(true);
+	expect(titlesArray.length).toBeGreaterThan(0);
 });
 ```
 
@@ -108,6 +108,30 @@ Förändringar:
 - ett test som kontrollerar datatyp på Atom-data också, inte bara RSS
 - ett test som kontrollerar output i HTML även när datakällan är Atom
 - testerna som testat för extrahering av flera värden är borttagna då ingen av dem nyttjas i modulen
+
+---
+
+## Testresultat #4
+
+**Datum:** 2025-10-17
+
+**Modulversion:** 1.0.8
+
+**Testmiljö:**
+
+- Visual Studio Code: 1.104.3
+- Node.js: 22.18.0
+- OS: Linux x64 6.8.0-85-generic
+- Distribution: Linux Mint, Cinnamon 22.1
+
+---
+
+![testrapport-4](./images/testrapport-4.png)
+
+### Kommentarer
+
+Testsvitens sista två tester är omarbetade då berörd funktion nu returnerar data av typen objekt med en sträng och objekt.
+Tidigare returnerade den endast en sträng. Testerna är alltså anpassade att kontrollera vilken typ av data som returneras nu.
 
 ---
 
